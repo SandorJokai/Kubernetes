@@ -1,0 +1,10 @@
+So far, there are 2 yaml files. The first one (replicaset.yml) creates a replicaset and 3
+absolutely same pods inside. In kubernetes, pod is the smallest object that can contain one or
+more containers (usually just one). Containers provide services such as apache, created by 
+docker, but all those things are hidden by kubernetes (noboby musn't to know necesseraly how 
+it works behind the scenes). That is the philosophy of kubernetes: almost everything can be
+automatized and we, DevOps people have to let the kubernetes do itself. 
+
+So, according to the second yaml when we launch it in cli /kubectl create -f blabla-filename
+&& kubectl get services / we can see the random generated port number that we can check in the
+browser typing the cluster's IP address followed by the port number. :)
