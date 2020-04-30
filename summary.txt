@@ -5,6 +5,6 @@ docker, but all those things are hidden by kubernetes (noboby musn't to know nec
 it works behind the scenes). That is the philosophy of kubernetes: almost everything can be
 automatized and we, DevOps people have to let the kubernetes do itself. 
 
-So, according to the second yaml (services.yml) when we launch it in cli /kubectl create -f blabla-filename
-&& kubectl get services / we can see the random generated port number that we can check in the
-browser typing the cluster's IP address followed by the port number. :)
+So, according to the second yaml (services.yml) when we launch it in cli <<< kubectl create -f 
+blabla-filename && kubectl get services >>> we can see the random generated port number that 
+we can check in the browser typing the cluster's IP address followed by the port number. :)
