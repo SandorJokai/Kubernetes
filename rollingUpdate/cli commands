@@ -1,0 +1,25 @@
+# When it's need to update the current image to a newer one, we can use this command:
+kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1 --record
+
+#We can see how the process goes:
+kubectl rollout status deployment.v1.apps/nginx-deployment
+
+#There is a chance to return an earlier state if anything is wrong with the updated version:
+kubectl rollout history deployment.v1.apps/nginx-deployment
+
+#The previous command only lists the exist state, here is the way to get back actually to an earlier version:
+kubectl rollout undo deployment.v1.apps/nginx-deployment 
+
+#When it's need to scale, (for example if we need 10 running pods instead of 3) we can also do that:
+kubectl scale deployment.v1.apps/nginx-deployment --replicas=10
+
+#Or automatically:
+kubectl autoscale deployment.v1.apps/nginx-deployment --min=10 --max=15 --cpu-percent=80
+
+
+
+#### These few command are just the most useful commands which I learned about so far. I do not
+#know yet what cli commands can be used in a real production environment, but I am trying to follow
+#tutorials and reading a book ("author:do not want to give the name here"-Kubernetes up and running)
+#as well. In the next section I will work with ingress that is an external modules that can allow
+#clients to reach services without typing any port numbers in url...
