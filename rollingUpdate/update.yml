@@ -1,0 +1,56 @@
+#Neither Pod and nor ReplicaSet recommend to declare directly in a yaml file. In the previous
+#section I did, cause I could demonstrate from the very beginning how the kubernetes works.
+#Deployment is the thing that we usually work with. That is exactly do what we did previously:
+#creating replicas and the replicasets creates as much pods as we declared. 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: api
+      service: web
+#### THIS IS NEW SECTION 
+#  minReadySeconds: 1
+#  progressDeadlineSeconds: 60
+#  revisionHistoryLimit: 5
+#  strategy:
+#    type: RollingUpdate
+#    rollingUpdate:
+#      maxSurge: 1
+#      maxUnavailable: 1
+#### END OF NEW SECTION
+  template:
+    metadata:
+      labels:
+        type: api
+        service: web
+        def: webcontent_providing
+    spec:
+      containers:
+      - name: apache2
+        image: httpd:2.4.41
+      
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache2-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+  selector:
+    type: api
+    service: web  
+
+
+#In the new section above we declared are directives. Those are related to rolling update which
+#means an updating method in kubernetes. For example when we have httpd:2.4.41 version of ap-
+#ache, we can update to a different version. Every one of them has got a default value, but we
+#can change whenever we want. It can be seen with this command: <<< kubectl get deployments
+#"deploymentsname" -o yaml >>>
