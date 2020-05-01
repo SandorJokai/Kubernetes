@@ -49,7 +49,7 @@ spec:
     service: web  
 
 
-#In the new section above we declared are directives. Those are related to rolling update which
+#In the new section above what we declared are directives. Those are related to rolling update which
 #means an updating method in kubernetes. For example when we have httpd:2.4.41 version of ap-
 #ache, we can update to a different version. Every one of them has got a default value, but we
 #can change whenever we want. It can be seen with this command: <<< kubectl get deployments
