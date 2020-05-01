@@ -1,1 +1,5 @@
-
+#We need to enable in minikube to use ---> minikube addons enable ingress
+To test that is created ---> kubectl get pods -n kube-system | grep ingress
+To test how it works ---> curl -i http://$(minikube ip)/healthz     //that is a check parameter to test ingress is ready
+                          curl -i http://$(minikube ip)/something_else  //it returns with an error code 404
+Conc: we can realize, we don't need to give a port number anymore. :)
