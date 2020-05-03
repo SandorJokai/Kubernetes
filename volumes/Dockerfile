@@ -2,7 +2,7 @@ FROM debian:10
 
 LABEL maintainer Sandor Jokai <shanxman1986@gmail.com>
 
-RUN apt update && apt install -y no-install-recommends apache2 libapache2-mod-php7.3 php7.3-gd \
+RUN apt update && apt install -y --no-install-recommends apache2 libapache2-mod-php7.3 php7.3-gd \
 php-getid3 php7.3-mysql php7.3-cli php7.3-json php7.3-opcache php7.3-readline apparmor-profiles \
 libapache2-mod-apparmor ca-certificates ssl-cert gnutls-bin git && apt-get clean && rm -rf /var/lib/apt/\
 lists/*
