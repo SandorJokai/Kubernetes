@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+ 
+ wordpress:
+    image: sandorjokai/debian:apache2php7-wp
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - wordpress-db
+    links:
+      - wordpress-db:db
+
+ wordpress-db:
+    image: mariadb:10
+    restart: always
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: 172.17.0.2
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+
+
+volumes:
+  db:
+    
