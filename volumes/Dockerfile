@@ -14,7 +14,7 @@ ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
 #Probably this is not the best idea despite it's not presents any danger to my other github repo (when I created
 #the Personal access tokens, I only permitted to accept the wordpress repository with only read permisson),
 #I could do that only with this method.
-ENV GITKEY d8a193543a088ec89d50e1be9b548afa56a087c7
+ENV GITKEY 11ade8b86d0dd41d24d11d536e3642ad5c86e68b
 
 RUN a2enmod rewrite php7.3 && a2dismod mpm_event && a2enmod mpm_prefork && mkdir -p /var/lock/\
 apache2 /var/run/apache2
