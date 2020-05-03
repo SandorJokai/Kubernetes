@@ -1,0 +1,25 @@
+#When it's necessary, we can create a container from an image (e.g.docker) and build another using a Dockerfile,
+#thus we are able to put our newly built image in to a repository later. In order to do that, we have to define
+#volumes in the yaml file:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: docker
+spec:
+  containers:
+  - name: docker
+    image: docker
+    command: ["sleep"]
+    args: ["100000"]
+    volumeMounts:
+    - name: docker-socket
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: docker-socket
+    hostPath:
+      path: /var/run/docker.sock
+      type: Socket
+
+#What the volumes did besides a few other features is to ensure a connection between a docker client and server
+#via socket. That could be demonstrated by this yaml.
