@@ -1,0 +1,12 @@
+                                     ############### PROLOGUE:############### 
+
+As I am going through the learning process of Kubernetes, I see there are a quite a few aspects of K8s managing. In this
+section, I am demonstrating how can we inject datas, configs, and even password secrets into a container.
+Yes, kubernetes can manage the user login authentication into a running application, BUT! that is not as safe enough as we 
+would think for the very first..
+
+If we want to get a far more secured system, there's a few method based on secret object, however my aim was just to understand
+this. For generic purpose, people might only use configMap object in order to inject generic configuration files when it's
+need it. But as the most common point of view, we should let an image as immutable as we can. Sometimes though unavoidable to
+inject datas this way for some reason, that is why I created this section.
+
