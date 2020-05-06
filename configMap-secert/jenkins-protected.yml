@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: jenkins
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /jenkins
+        backend:
+          serviceName: jenkins
+          servicePort: 8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+  selector:
+    matchLabels:
+      type: app
+      service: jenkins
+  template:
+    metadata:
+      labels:
+        type: app
+        service: jenkins
+    spec:
+      containers:
+      - name: jenkins
+        image: vfarcic/jenkins
+        env:
+        - name: JENKINS_OPTS
+          value: --prefix=/jenkins
+        - name: SECRETS_DIR
+          value: /etc/secrets
+        volumeMounts:
+        - name: jenkins-auth
+          mountPath: /etc/secrets
+      volumes:
+      - name: jenkins-auth
+        secret:
+          secretName: user-pass
+          defaultMode: 0444
+          items:
+          - key: username
+            path: jenkins-user
+          - key: password
+            path: jenkins-pass
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+spec:
+  ports:
+  - port: 8080
+  selector:
+    type: app
+    service: jenkins
+
