@@ -8,6 +8,8 @@ spec:
       paths:
       - path: /
         backend:
+#When I first launched, could not to reach the service, because ingress serviceName was not equal the name of the metadata
+#in the service object at bottom. It's important to match between these 2 names, otherwise ingress shows http 503 error.
           serviceName: apache2
           servicePort: 80
 
@@ -55,6 +57,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+#It's important that the name of Service matches with ingress serviceName at the top.
   name: apache2
 spec:
   ports:
