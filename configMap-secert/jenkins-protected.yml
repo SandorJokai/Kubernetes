@@ -1,3 +1,14 @@
+######## Preparing:
+# kubectl create secret generic user-pass --from-literal=username=test --from-literal=password=secret
+
+#There are 3 different types of secret: docker-registry, tls and generic. According to the secret's purpose, it is
+#useable for a secure http protocol via https, making a docker private repository connection and for login authenti-
+#cation to an app. In case, I used for the last method. It is not far more secured, but it can give a bit more safe-
+#ty. My aim was to demonstrate these two type of solutions: configMap (example-cm.yml) and secret.
+#Using the secret object, it can be more secured with using some extra stuffs and feature, but portability and
+#immutability was the most important facts to me in this time.
+########
+
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
