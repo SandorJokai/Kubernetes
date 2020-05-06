@@ -1,6 +1,11 @@
 ######## Preparing:
 # kubectl create secret generic user-pass --from-literal=username=test --from-literal=password=secret
 
+#After I created the secret (user-pass) above, the system used base64 encoding algorithm to store it in encrypted form.
+#No, we can not feel in safe as it can be decrypted using a very simple bash command. But it is good enough if we
+#do not want to store any sensitive data in raw format rather than using encryption at all. I could have used kuber-
+#netes access management, and restrict who can access the information stored in the cluster, but that is a lesson later.
+
 #There are 3 different types of secret: docker-registry, tls and generic. According to the secret's purpose, it is
 #useable for a secure http protocol via https, making a docker private repository connection and for login authenti-
 #cation to an app. In case, I used for the last method. It is not far more secured, but it can give a bit more safe-
