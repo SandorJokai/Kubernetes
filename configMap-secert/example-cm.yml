@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: example-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: apache2
+          servicePort: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example
+spec:
+  selector:
+    matchLabels:
+      type: web
+      service: http
+  template:
+    metadata:
+      labels:
+        type: web
+        service: http
+    spec:
+      containers:
+      - name: apache2
+        image: httpd
+        env:
+          - name: BIGGERTHANEARTH
+            valueFrom:
+              configMapKeyRef:
+                name: planets
+                key: biggerthanearth
+          - name: SMALLERTHANEARTH
+            valueFrom:
+              configMapKeyRef:
+                name: planets
+                key: smallerthanearth
+        volumeMounts:
+          - name: infected-file
+            mountPath: /example
+      volumes:
+        - name: infected-file
+          configMap:
+            name: planets
+    
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache2
+spec:
+  ports:
+  - port: 80
+  selector:
+    type: web
+    service: http
+
