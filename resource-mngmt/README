@@ -1,1 +1,25 @@
+With resource management we can limit the usage of memory and cpu. That means, after the settings,
+there is no one who can use the whole resource of the node neither for purpose, nor by accident. 
+We can and MUST set limits on every single object in kubernetes otherwise our applications might
+are not up and running guaranteed all the time. We can set in two types: request and limit. 
+The request means what size of memory or cpu usage needs to be approximately for normal processing 
+and the other one is exactly the limits. 
+If an application needs more resource than the requested, it is not a problem IF there is some
+free capacity in the node where can be added. However, if an application needs more resource than
+the limits, the kubernetes scheduler will be killed the application in terms of memory and the 
+running application will get slow temporarily in terms of the cpu limit.
+It is not exactly means that our services won't be available, but it could get enough problems.
+What is happening in a case like this: assume there is replicas and more than only one pods from
+every applications, so even though the scheduler get killed the limited pod, but the deployment
+can react immediately that in not the expected state so it can start a new pods over and over again. 
 
+Furthermore there is a mechanism behind all these that can prioritise the pods according to their
+resource usage: Qos -stands for Quality of Service- means three different types of state:
+-guaranteed
+- burstable
+and besteffort Qos. The top level prioritised pods belongs to the guaranteed group which has got
+a condition: the requests and the limits need te be equal.
+
+Before we start to provide for real customers, we have to measure the usage of resources in order
+to get some more punctual value. There are some method to do so, I will use a minikube built-in
+addon called heapster #### minikube addons enable heapster
