@@ -18,8 +18,8 @@ resource usage: Qos -stands for Quality of Service- means three different types 
 -guaranteed
 - burstable
 and besteffort Qos. The top level prioritised pods belongs to the guaranteed group which has got
-a condition: the requests and the limits need te be equal.
+a condition: the requests and the limits needs to be equal.
 
 Before we start to provide for real customers, we have to measure the usage of resources in order
 to get some more punctual value. There are some method to do so, I will use a minikube built-in
-addon called heapster #### minikube addons enable heapster
+addon called metrics-server #### minikube addons enable metrics-server
