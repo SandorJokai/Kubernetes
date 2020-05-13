@@ -1,3 +1,8 @@
+#This definiton only limits resources in an object, but what if a user in the namespace launch it in a hundred times?
+#It can be multiplicate? Of course, but I will demonstrate how we can limit the WHOLE namespace's resources in the next
+#yaml file: dev.yml.
+
+
 #Let's create a namespace called test: kubectl create ns test
 #Once we created, let's launch the limitsOnNamespace yaml file: kubectl --namespace test apply -f limitsOnNamespace
 #To type this command, we can see what are the limits in the namespace: kubectl describe namespaces test
