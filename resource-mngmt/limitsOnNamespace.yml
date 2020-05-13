@@ -23,4 +23,5 @@ spec:
     type: Container
     
 #According to this file, we set up a resource limits in test namespace, thus anyone creating objects, the defaults
-#can be limited by "default" and "defaultRequest", if they give some values, the values must be within the interval.
+#can be limited by "default" and "defaultRequest", if they give some values, the values must be within the interval
+#otherwise shows some error message that we can check typing this: kubectl -n test get events -w.
