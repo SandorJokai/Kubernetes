@@ -1,0 +1,27 @@
+#Let's create a namespace for developers, called in simple: dev:
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+
+---
+#The definition below not affects to the pods one by one,BUT the whole namespace!
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev
+  namespace: dev
+spec:
+  hard:
+    #In the dev namespace, the requested cpu and memory by all containers MUST NOT be more than 0.8 in cpu and 500Mi of memory    
+    requests.cpu: 0.8
+    requests.memory: 500Mi
+    #very simirarly, the limits of cpu and memory by all containers MUST NOT be more than 1 in cpu and 1Gi of memory.
+    limits.cpu: 1
+    limits.memory: 1Gi
+    #Here is the answer of can anyone launch pods a hundred times?? Not this time, 10 pods is the allowed quantity.
+    pods: 10
+    #And here this last line, I can limit any internal service to expose for developers outside the world:
+    services.nodeports: "0"
