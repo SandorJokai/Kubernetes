@@ -1,0 +1,26 @@
+#Let's create a namespace called test: kubectl create ns test
+#Once we created, let's launch the limitsOnNamespace yaml file: kubectl --namespace test apply -f limitsOnNamespace
+#To type this command, we can see what are the limits in the namespace: kubectl describe namespaces test
+
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: limit-range
+spec:
+  limits:
+  - default:
+      memory: 50Mi
+      cpu: 0.2
+    defaultRequest:
+      memory: 30Mi
+      cpu: 0.05
+    max:
+      memory: 80Mi
+      cpu: 0.5
+    min:
+      memory: 10Mi
+      cpu: 0.01
+    type: Container
+    
+#According to this file, we set up a resource limits in test namespace, thus anyone creating objects, the defaults
+#can be limited by "default" and "defaultRequest", if they give some values, the values must be within the interval.
