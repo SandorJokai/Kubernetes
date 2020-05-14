@@ -1,0 +1,37 @@
+                                 ########## Prepare before install kops itself: ##########
+------------------------------------------------
+Let's create some env vars again:
+
+export NAME=sandorjokai.k8s.local     // I will not use a cluster with public domain services for the first.
+export BUCKET_NAME=sandorjokai-kops
+aws s3api create-bucket --bucket $BUCKET_NAME --create-bucket-configuration LocationConstraint=$AWS_DEFAULT_REGION
+export KOPS_STATE_STORE=s3://$BUCKET_NAME
+------------------------------------------------
+
+                                 ########## Let's download the kops now: ##########
+
+curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/\
+kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+chmod +x kops-linux-amd64
+sudo mv kops-linux-amd64 /usr/local/bin/kops
+kops version ---> it shows the version of the latest kops. 
+------------------------------------------------
+
+We always should choose at least 3 master nodes to provide High Availability. (5-7 is even more HA)
+Once we know where we want to create a cluster (eu-west-2) with how many master nodes, the next thing we
+should decide is what sort of network solutions that we want to use: there is a default (kubenet) which is
+provided by aws, I will choose it this time.
+Kubenet using VPC routing tables.
+There is a limit in using kubenet: in the whole cluster there MUST NOT much virtual machines than 50 including
+master and worker nodes! But in my case that is quite a lot, so should be alright for me now.
+                       
+                       ########## Finally with this command we can CREATE THE CLUSTER ##########
+
+kops create cluster --name $NAME --master-count 3 --node-count 1 --node-size t2.small --master-size t2.small \
+--zones $ZONES --master-zones $ZONES --ssh-public-key kops.pub --networking kubenet --yes
+
+Let's check it:
+-- kubectl config current-context
+-- kops get cluster
+-- kubectl cluster-info     // Possibly shows some error, we just have to wait more
+-- kops validate cluster
