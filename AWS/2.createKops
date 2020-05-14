@@ -35,3 +35,5 @@ Let's check it:
 -- kops get cluster
 -- kubectl cluster-info     // Possibly shows some error, we just have to wait more
 -- kops validate cluster
+------------------------------------------------
+source <(kops completion bash) ---> This command allowed to use bash completion
