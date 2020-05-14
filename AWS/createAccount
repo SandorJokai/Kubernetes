@@ -1,0 +1,81 @@
+https://console.aws.amazon.com
+-----------------------------------------------------
+security credentials ---> Access keys ---> create new access key ---> download+make environment variable (export
+-----------------------------------------------------
+AWS_ACCESS_KEY_ID="", export AWS_SECRET_ACCESS_KEY=""
+-----------------------------------------------------
+in order to get interaction with aws, download awscli program: apt install awscli
+-----------------------------------------------------
+save it to the PATH: export PATH=~/.local/bin/:$PATH && echo 'export PATH=~/.local/bin/:$PATH' >> ~/.bashrc
+-----------------------------------------------------
+check does it work: aws --version ---> it should show the number of version, kernel of version..
+-----------------------------------------------------
+
+                                    ############# MAKE A CLUSTER #############
+
+In order to make virtual machines on AWS, firstly we need to choose a region. (nearest to our future customers
+is the best option to choose) These data centers are absolutely independent from each other. One region content
+more zones...
+Furthermore it is very important to choose a region, that there are three zones at least in order to provide a more
+secure service with High Availability.
+
+
+Preperations:
+
+aws configure: need to paste the credentials ---> default region name: eu-west-2 (London in my case)
+aws ec2 describe-regions ---> here's a list of many more regions.
+-----------------------------------------------------
+export AWS_DEFAULT_REGION=eu-west-2
+-----------------------------------------------------
+aws ec2 describe-availability-zones --region $AWS_DEFAULT_REGION (is there three zones at least? if it yes, that's good)
+-----------------------------------------------------
+In this section, I make IAM (Identity and Access Management) resources (a user who allowed to make cluster)
+Following the good practise, for every task in aws need to create IAM identification with limited privileges.
+
+
+aws iam create-group --group-name kops
+// I created a group called kops
+-----------------------------------------------------
+aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonEC2FullAccess --group-name kops
+// This command gave an access to kops group to make virtual machines in the cluster
+-----------------------------------------------------
+aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess --group-name kops
+// I'll store the cluster's state in S3 in order to store not just on my laptop
+-----------------------------------------------------
+aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonVPCFullAccess --group-name kops
+// permit for EC2 to have virtual network
+-----------------------------------------------------
+aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/IAMFullAccess --group-name kops
+// permit for kops group to create privileges
+-----------------------------------------------------
+aws iam create-user --user-name kops
+// I created a user called kops
+-----------------------------------------------------
+aws iam add-user-to-group --user-name kops --group-name kops
+// I added kops user to kops group
+-----------------------------------------------------
+aws iam create-access-key --user-name kops >kops-creds
+// Let's create credentials for kops user in order to make sure he's allowed to work in the cluster
+// He got automatically all privileges that the group kops1s has got
+-----------------------------------------------------
+Now I need an installed program called jq (JSON parsor) to get informations from a json file:
+apt install jq
+-----------------------------------------------------
+Let's use the jq:
+
+export AWS_ACCESS_KEY_ID=$(jq -r '.AccessKey.AccessKeyId' kops-creds)
+export AWS_SECRET_ACCESS_KEY=$(jq -r '.AccessKey.SecretAccessKey' kops-creds)
+// I changed the previously created root environment variable to kops user's credentials
+-----------------------------------------------------
+List the available zones again:
+aws ec2 describe-availability-zones --region $AWS_DEFAULT_REGION
+
+and put the ZoneNames to another env var ---> export ZONES="Copy+paste"   //I know this is not the most sophisticated
+solution to do so, but this time my perspective was just to understand the aws making cluster process.
+-----------------------------------------------------
+Let's create an ssh key for user kops. In future he will be able to make ssh connection with the servers whenever
+he needs. STORE IN A VERY SECURE PLACE ALL TIMES!!!
+aws ec2 create-key-pair --key-name kops | jq -r '.KeyMaterial' > kops.pem
+chmod 400 kops.pem ---> only read permit for user kops
+ssh-keygen -y -f kops.pem > kops.pub ---> make a public key from kops.pem
+-----------------------------------------------------
