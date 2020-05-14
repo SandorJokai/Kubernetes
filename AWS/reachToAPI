@@ -1,0 +1,32 @@
+Az AWS elb-t (elastic Load Balancer) hasznal a node-ok eleresere. 
+Az alabbi parancs kilistazza tobbek kozott a dns nevet a clusterunknek:
+aws elb describe-load-balancers
+
+Itt a DNSName az erdekes, ami egy fqdn-szeru teljes eleresi cim
+
+Az alabbi parancs kiadasa utan jol lathato, hogy a kops automatikusan legeneralta a kubectl-nak
+az AWS API elereset:
+
+kubectl config view
+
+Ez mind szep es jo, de most mar jo lenne elerni a worker node-okon futtatott alkalmazasokat is...
+
+----------------------------------------------------------
+Szerencsere a fentebbi problemara a kopsnak szinten van megoldasa:
+
+Eloszor is szuksegunk lesz egy masik terheles elosztora, ami immar a workerekhez fogja iranyitani a forgalmat.
+Egy ingress-re lesz szuksegunk ezuttal:
+
+https://github.com/kubernetes/kops/tree/master/addons
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
+
+Adjuk ki az alabbi parancsot, h lassuk a valtozasokat:
+kubectl -n kube-ingress get all
+Ami itt erdekes, hogy megjelent a LoadBalancer tipusu service, ami lesz a kulcsa az alkalmazasok eleresenek.
+
+aws elb describe-load-balancers
+Ezt meg egyszer kiadva, lathato a DNSName az uj service-nek, ideje valtozoba menteni:
+CLUSTER_DNS=$(aws elb describe-load-balancers | jq -r ".LoadBalancerDescriptions[] | select(.DNSName | contains \
+(\"api-sandorjokai\") | not).DNSName")
+
