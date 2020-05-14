@@ -1,0 +1,58 @@
+Gyakran szükségünk van arra, hogy növeljük a node-ok (workerek) számát 1-1 zsúfoltabb periódus során
+(pl egy kampány időszaka) szerencsére az aws könnyű megoldást tud ehhez nyújtani a kops edit parancs
+használatával:
+
+Az instanceGroup (ig) szerkesztésével érhető el az elvárt állapot (hány worker fusson)
+kops edit ig --name $NAME nodes
+
+A fentebbi parancs kiadása után azonnal megnyitja a az instanceGroup yaml fajlt, aminek szerkesztésével
+írhatjuk le az elvárt állapotot (legyen egy worker node-al több)
+
+Az alábbi parancs pedig a clusteren hajtja végre ténylegesen a műveletet:
+kops update cluster --name $NAME --yes
+
+Ellenőrízzük le:
+kops validate cluster
+
+---------------------------------------------------------
+Másik szokásosabb művelet lehet még egy clusterben annak verziójának a frissítése
+
+kops edit cluster $NAME
+
+Szintén egy yaml fájl belsejében találjuk magunkat, ezúttal a cluster típusú objektuméban
+kubernetesVersion: 1.16.9 ---> itt írhatjuk at a preferált verziószámot (célszerű egyenként változtatni
+a kisebb változások érdekében)
+
+kops update cluster --name $NAME
+Az alabbi parancs --yes opció nelkul kiadva csak szimulalja, hogy mi tortenne
+Ha elegedettek vagyunk, adjuk ki immar a yes-el
+
+kops rolling-update cluster $NAME
+Az alabbi parancs szinten a yes opcio nelkul kiadva mutatja, hogy mi fog frissulni (gyakorlatilag az
+osszes node), vegul adjuk ki a yes-el.
+
+
+Ez a gyakorlatban pontosan ugy tortenik, mint akar egy deployment rolling-update-ja eseten:
+A scheduler egyenkent atütemezi a node-okon futo podokat,replicasetet,deploymentet... egy masik node-ra.
+Majd ha ezzel végzett, leallitja es torli teljesen a clusterbol. 
+Ezt kovetoen az AWS ASG (Auto Scaling Group) eszleli hogy kevesebb virtualis gep fut az eloirthoz kepest
+es ennek megfeleloen indit egyet, de mar a frissitett verzioszamu kubernetes-sel.
+Ha vegzett egy node update-elesevel, folytatodik a tobbivel ugyanezen folyamatok. Eloszor a master
+node-okon hajtodik vegre a frissitest, majd a worker-ekkel.
+
+ez egy picit hosszabb muvelet lehet osszessegeben, legyunk türelmesek.
+
+---------------------------------------------------------
+
+A fentebi pelda egy konkret verziora valo frissitest tette lehetove, ayonban lehetoseg van automatikus
+upgrade-re is:
+kops upgrade cluster $NAME --yes - paranccsal.
+
+Ezt kovetoen:
+kops upgrade cluster $NAME --yes
+kops rolling-update cluster $NAME --yes
+
+Ezen nehany parancs nem csinal mast, mint elerhetove teszi a kops altal tamogatott legfrisebb verzioju
+kubernetest a clusterban.
+
+kubectl get nodes
