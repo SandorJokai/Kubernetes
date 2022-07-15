@@ -16,8 +16,8 @@
  The swap also needs to be disabled.
  Kubernetes works with cli so-called kubectl. In order to use this easily, let's install bash-completion if hasn't installed yet:
  
- 1.
- ```bash
+ 
+ ```1 bash
  yum install -y vim git bash-completion
  ```
  also needs to append to ~/.bashrc:
