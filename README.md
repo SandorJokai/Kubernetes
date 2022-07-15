@@ -19,11 +19,23 @@
  
  ```bash
  git clone https://github.com/sandervanvugt/cka
+ ```
+ ```bash
  cd cka/
+ ```
+ ```bash
  ./setup-container.sh
+ ```
+ ```bash
  sed -i -e 's/gpgcheck=1/gpgcheck=0/' -e 's/repo_gpgcheck=1/repo_gpgcheck=0/' setup-kubetools-new.sh
+ ```
+ ```bash
  ./setup-kubetools-new.sh
+ ```
+ ```bash
  rm /etc/containerd/config.toml
+ ```
+ ```bash
  systemctl restart containerd.service
  ```
  
