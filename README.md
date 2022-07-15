@@ -1,3 +1,10 @@
+![npm package](https://img.shields.io/badge/kubernetes-1.24.3-blue.svg)
+![npm package](https://img.shields.io/badge/centos-7.9.2009-purple.svg)
+![npm package](https://img.shields.io/badge/git-1.8.3-red.svg)
+![npm package](https://img.shields.io/badge/go-1.18.3-cyan.svg)
+![npm package](https://img.shields.io/badge/docker-20.10.17-blue.svg)
+
+
 <h1>Create an own cluster</h1>
 <h2>Prerequisites</h2>
 <h3>System HW requirements:</h3>
@@ -17,6 +24,8 @@
  ```bash
  echo 'source <(kubectl completion bash)' >>~/.bashrc
  ```
+ 
+Before we go any further, don't forget to add all nodes into /etc/hosts on all nodes.
 
   - We can use another repo for installing docker and the kubernetes with all those dependencies:
  
@@ -38,7 +47,7 @@
  ./setup-kubetools-new.sh
  ```
  ```bash
- rm /etc/containerd/config.toml
+ rm -f /etc/containerd/config.toml
  ```
  ```bash
  systemctl restart containerd.service
@@ -50,3 +59,26 @@
 ```bash
 kubeadm init
 ```
+
+Follow the instructions after the "Your Kubernetes control-plane has initialized successfully!" message:
+
+```bash
+su - regular-user
+```
+```bash
+mkdir -p $HOME/.kube
+```
+```bash
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+```
+```bash
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+ - Once done that, we should deploy a pod network to the cluster as well as join the worker nodes. In order to do that, make sure the "kubeadm join..." line be saved into a file for the future usage.
+
+![npm package](https://img.shields.io/badge/kubernetes-1.24.3-blue.svg)
+![npm package](https://img.shields.io/badge/centos-7.9.2009-purple.svg)
+![npm package](https://img.shields.io/badge/git-1.8.3-red.svg)
+![npm package](https://img.shields.io/badge/go-1.18.3-cyan.svg)
+![npm package](https://img.shields.io/badge/docker-20.10.17-blue.svg)
