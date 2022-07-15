@@ -77,6 +77,21 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
  - Once done that, we should deploy a pod network to the cluster as well as join the worker nodes. In order to do that, make sure the "kubeadm join..." line be saved into a file for the future usage.
 
+<h2>Create a deployment</h2>
+In order to use kubernetes for deploying applications and publishing them, of course we need a Container Network Interface (CNI):
+
+```bash
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
+
+There's more available in the official documentation, I use weave for now.
+
+```bash
+kubectl get nodes
+```
+
+We should see the "Ready" status this time, which means we can add the worker nodes finally.
+
 ![npm package](https://img.shields.io/badge/kubernetes-1.24.3-blue.svg)
 ![npm package](https://img.shields.io/badge/centos-7.9.2009-purple.svg)
 ![npm package](https://img.shields.io/badge/git-1.8.3-red.svg)
