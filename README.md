@@ -79,7 +79,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
  - Once done that, we should deploy a pod network to the cluster as well as join the worker nodes. In order to do that, make sure the "kubeadm join..." line be saved into a file for the future usage.
 
 <h2>Create a deployment</h2>
-In order to use kubernetes for deploying applications and publishing them, of course we need a Container Network Interface (CNI):
+In order to use kubernetes for deploying applications and publishing them, of course we need to have a Container Network Interface (CNI):
 
 ```bash
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
