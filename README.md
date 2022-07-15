@@ -102,7 +102,7 @@ yum install -y vim git bash-completion
 systemctl restart containerd.service
 ```
 
-If we see this:
+If we see this on the master:
 
 ```bash
 kubectl get nodes
