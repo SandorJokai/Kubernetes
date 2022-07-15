@@ -12,3 +12,23 @@
  ```bash
  echo 'source <(kubectl completion bash)' >>~/.bashrc
  ```
+
+  - We can use another repo for installing docker and the kubernetes with all those dependencies:
+ 
+ Run all these commands below for doing that:
+ 
+ ```bash
+ git clone https://github.com/sandervanvugt/cka
+ cd cka/
+ ./setup-container.sh
+ sed -i -e 's/gpgcheck=1/gpgcheck=0/' -e 's/repo_gpgcheck=1/repo_gpgcheck=0/' setup-kubetools-new.sh
+ ./setup-kubetools-new.sh
+ rm /etc/containerd/config.toml
+ systemctl restart containerd.service
+ ```
+ 
+  - From this point, we should be able to initialize the cluster:
+
+```bash
+kubeadm init
+```
