@@ -1,12 +1,12 @@
 <h1>Create an own cluster</h1>
 <h2>Prerequisites</h2>
-<h3>System HW reuirements:</h3>
+<h3>System HW requirements:</h3>
 
   - 2 cores of CPU at least
   - 2GiB of Memory
 
   - If there's a running FW, it needs to be disabled otherwise we need to add ports and services later on.
- The swap also needs to be disable.
+ The swap also needs to be disabled.
  Kubernetes works with cli so-called kubectl. In order to use this easily, let's install bash-completion if hasn't installed yet:
  
  ```bash
