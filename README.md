@@ -39,7 +39,8 @@
  systemctl restart containerd.service
  ```
  
-  - From this point, we should be able to initialize the cluster:
+ ------------------------------------------------------------------------
+ From this point, we should be able to initialize the cluster:
 
 ```bash
 kubeadm init
