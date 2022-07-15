@@ -17,7 +17,7 @@
  Kubernetes works with cli so-called kubectl. In order to use this easily, let's install bash-completion if hasn't installed yet:
  
  
-1. ```bash
+ ```bash
  yum install -y vim git bash-completion
  ```
  also needs to append to ~/.bashrc:
@@ -92,6 +92,26 @@ kubectl get nodes
 ```
 
 We should see the "Ready" status this time, which means we can add the worker nodes finally.
+Don't forget to run all commands on workers before we run the "kubeadm join" cmd on workers:
+
+```bash
+yum install -y vim git bash-completion
+```
+...
+```bash
+systemctl restart containerd.service
+```
+
+If we see this:
+
+```bash
+kubectl get nodes
+NAME          STATUS   ROLES           AGE   VERSION
+k8s-master    Ready    control-plane   32m   v1.24.3
+worker-test   Ready    <none>          28s   v1.24.3
+```
+
+means we can make deployments. :)
 
 ![npm package](https://img.shields.io/badge/kubernetes-1.24.3-blue.svg)
 ![npm package](https://img.shields.io/badge/centos-7.9.2009-purple.svg)
