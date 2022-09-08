@@ -102,6 +102,16 @@ yum install -y vim git bash-completion
 systemctl restart containerd.service
 ```
 
+Note: Everytime we add a new node, worth checking the network status:
+```bash
+kubectl get pods -n kube-system
+```
+If we see 1/2 in READY column next to the new nodes, a rule need to be added in iptables:
+```bash
+iptables -t nat -I KUBE-SERVICES -d 10.96.0.1/32 -p tcp -m comment --comment "default/kubernetes:https cluster IP" -m tcp --dport 443 -j KUBE-MARK-MASQ
+```
+Check again and should be seen 2/2 READY this time
+
 If we see this on the master:
 
 ```bash
