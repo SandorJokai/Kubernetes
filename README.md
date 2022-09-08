@@ -42,10 +42,10 @@ Before we go any further, don't forget to add all nodes into /etc/hosts on all n
  ./setup-container.sh
  ```
  ```bash
- sed -i -e 's/gpgcheck=1/gpgcheck=0/' -e 's/repo_gpgcheck=1/repo_gpgcheck=0/' setup-kubetools-new.sh
+ sed -i -e 's/gpgcheck=1/gpgcheck=0/' -e 's/repo_gpgcheck=1/repo_gpgcheck=0/' setup-kubetools-new-PRERELEASE.sh
  ```
  ```bash
- ./setup-kubetools-new.sh
+ ./setup-kubetools-new-PRERELEASE.sh
  ```
  ```bash
  rm -f /etc/containerd/config.toml
@@ -58,7 +58,7 @@ Before we go any further, don't forget to add all nodes into /etc/hosts on all n
  From this point, we should be able to initialize the cluster:
 
 ```bash
-kubeadm init
+kubeadm init      # --apiserver-advertise-address <IPAddress>
 ```
 
 Follow the instructions after the "Your Kubernetes control-plane has initialized successfully!" message:
