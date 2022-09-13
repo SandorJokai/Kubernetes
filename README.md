@@ -112,6 +112,11 @@ iptables -t nat -I KUBE-SERVICES -d 10.96.0.1/32 -p tcp -m comment --comment "de
 ```
 Check again and should be seen 2/2 READY this time
 
+If we like to publish an app from host, we need to expose the service to an external IP:
+```bash
+kubectl patch svc <my-service> -p '{"spec":{"externalIPs":["192.168.1.119"]}}'
+```
+
 If we see this on the master:
 
 ```bash
