@@ -80,9 +80,15 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 <h2>Create a deployment</h2>
 In order to use kubernetes for deploying applications and publishing them, of course we need to have a Container Network Interface (CNI):
+(Possibly this won't work anymore...)
 
 ```bash
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
+Try this instead:
+
+```bash
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 ```
 
 There's more available in the official documentation, I use weave for now.
