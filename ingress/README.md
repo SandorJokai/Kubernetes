@@ -1,4 +1,4 @@
-In order to work ingress, firstly we need to install the controller:
+In order to use ingress, firstly we need to install the controller:
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml
 ```
@@ -36,5 +36,5 @@ kubectl create secret tls my-tls-secret -n <namespace> --key ssl/ssl.key --cert 
 launch the deployment, wait a bit then test. Should see the application as secured in the browser.
 
 Useful links:
-	for the controller: https://docs.k0sproject.io/v1.23.6+k0s.2/examples/nginx-ingress/
-	for LB: https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/ (this wasn't necessary in my case)
+- for the controller: https://docs.k0sproject.io/v1.23.6+k0s.2/examples/nginx-ingress/
+- for LB: https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/ (this wasn't necessary in my case)
