@@ -16,7 +16,7 @@ kubectl edit service ingress-nginx-controller -n ingress-nginx
 
 since we use k8s in virtualbox and have no load balancers, need to run this:
 ```bash
-kubectl patch svc ingress-nginx-controller -n ingress-nginx -p '{"spec": {"type": "LoadBalancer", "externalIPs":["<external_ip>"]}}
+kubectl patch svc ingress-nginx-controller -n ingress-nginx -p '{"spec": {"type": "LoadBalancer", "externalIPs":["<external_ip>"]}}'
 ```
 
 verify with curl/browser its reachibility:
