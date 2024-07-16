@@ -37,4 +37,6 @@ launch the deployment, wait a bit then test. Should see the application as secur
 
 Useful links:
 - for the controller: https://docs.k0sproject.io/v1.23.6+k0s.2/examples/nginx-ingress/
-- for LB: https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/ (this wasn't necessary in my case)
+- for LB: https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/
+(this wasn't necessary in my case)
+- explain ingress: https://medium.com/@danielepolencic/learning-how-an-ingress-controller-works-by-building-one-in-bash-ac3929f7699#:~:text=You%20can%20think%20of%20the,come%20with%20one%20by%20default. 
