@@ -1,7 +1,5 @@
 In order to work ingress, firstly we need to install the controller:
- ```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml
-```
+`kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml`
 
 wait a couple of minutes then verify:
  ```bash
