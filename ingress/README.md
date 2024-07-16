@@ -21,9 +21,9 @@ curl -I http://<external_ip>
 
 SSL/TLS
 
-	- get a valid cert (I can use mine, just need to make the dns locally in /etc/hosts)
- 	- add the cert and key resources in base64 format to deployment
-	- create a secret for the ssl:
+- get a valid cert (I can use mine, just need to make the dns locally in /etc/hosts)
+- add the cert and key resources in base64 format to deployment
+- create a secret for the ssl:
 ```bash
 kubectl create secret tls my-tls-secret -n <namespace> --key ssl/ssl.key --cert ssl/ssl.crt
 ```
