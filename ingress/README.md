@@ -9,6 +9,11 @@ kubectl get all -n ingress-nginx
 ```
 (might not all pods be running, but must be running for ingress-nginx-controller)
 
+Run this to change the type of ingress's service from NodePort -> LoadBalancer:
+```bash
+kubectl edit service ingress-nginx-controller -n ingress-nginx
+```
+
 since we use k8s in virtualbox and have no load balancers, need to run this:
 ```bash
 kubectl patch svc ingress-nginx-controller -n ingress-nginx -p '{"spec": {"type": "LoadBalancer", "externalIPs":["<external_ip>"]}}
