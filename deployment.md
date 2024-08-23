@@ -37,3 +37,11 @@ One more thing I had to done with since I use baremetal for my k8s cluster is pa
 kubectl patch svc traefik -n traefik -p '{"spec": {"type": "LoadBalancer", "externalIPs":["192.168.1.231"]}}'
 ```
 Once done that only one thing which is left is creating the deployment...
+<h2>Launch a deployment</h2>
+
+> Ingress is used to expose HTTP and HTTPS routes from outside the cluster to services within the cluster. Besides, can use TLS termination which is my preference in the next deployment.
+> Prerequisites for using it properly is getting a domain and valid SSL key and certs. I created a secret resource for using it:
+```bash
+kubectl create secret tls my-tls-secret -n ampache --cert=ssl/mycert.crt --key=ssl/mycert.key
+```
+also, was needed to put the cert's contents in the deployment yaml file in base64 coded.
