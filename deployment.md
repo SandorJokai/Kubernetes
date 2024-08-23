@@ -6,8 +6,9 @@ Had to replace weave with calico as I noticed there wasn't DNS resolution inside
 <h2>What CNI is?</h2>
 In a nutshell, it's Container Network Interface which is required for configuring network properly. Further, the calico is a third party plugin for using CNI.
 <h2>Install calico</h2>
+
 ```bash
- kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/crds.yaml
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/crds.yaml
 ```
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/custom-resources.yaml
@@ -16,7 +17,7 @@ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/calico.yaml
 ```
 As a next step what other component we need is an ingress controller. Again, there's many variant available but I've chosen traefik this time.
-(It's pretty simple and easy to use)
+> It's pretty simple and easy to use
 <h2>Install traefik</h2>
 (Make sure there is help previously install with version >3)
 ```bash
