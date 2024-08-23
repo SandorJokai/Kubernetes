@@ -7,7 +7,7 @@ Had to replace weave with calico as I noticed there wasn't DNS resolution inside
 In a nutshell, it's Container Network Interface which is required for configuring network properly. Further, the calico is a third party plugin for using CNI.
 <h2>Install calico</h2>
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/crds.yaml
+ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/crds.yaml
 ```
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/custom-resources.yaml
