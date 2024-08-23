@@ -19,6 +19,7 @@ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/
 As a next step what other component we need is an ingress controller. Again, there's many variant available but I've chosen traefik this time.
 > It's pretty simple and easy to use
 <h2>Install traefik</h2>
+
 > Make sure there is helm previously installed with version 3.X
 
 ```bash
